@@ -1,12 +1,25 @@
+<meta charset="Utf-8">
 <?php
-$i = $_REGUEST['Login'];
-$p = $_REGUEST['password'];
-try {
-/*header("Location: panel.html");*/
-$pdo = new PDO('mysql:host= localhost;dbname = db_sec','root','');
-echo"Есть подключение";
-}
-catch(PDOException $e) {
-	echo"Есть подключение";
-}
+$l = $_REQUEST['login'];
+$p = $_REQUEST['password'];
+$host='localhost';
+$dbname='daba';
+$user='root';
+$password='';
+$db = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$db->exec("set names utf8");
+$st = $db->query('SELECT password,login FROM sec');
+foreach ($st->fetchAll() as $row) {
+
+
+    $pp = $row['password'];
+
+
+if ($pp == $p)
+   require_once "panel.html";
+else 
+    echo "dostupa nety";
+
 ?>
+
